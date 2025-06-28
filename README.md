@@ -11,7 +11,7 @@ A fully responsive web app to track and analyze expenses...
 
 ## 🎥 Demo Video
 
-[Click here to watch the demo video](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/blob/main/assets/demo.mp4)
+[Click here to watch the demo video](expense tracker/expense-tracker (1).mp4)
 
 ## 🚀 Technologies Used
 
