@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Summary</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    .navbar {
+      background-color: #ff6f61;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .budget-row span:first-child {
+      font-weight: bold;
+    }
+
+    .budget-row span:last-child {
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <h1>Expense Tracker</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="budget-chart.html">Budget Chart</a>
+
+      <a href="index.html">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Your Budget Summary</h2>
+    <div id="budgetSummary"></div>
+  </div>
+
+  <script>
+    const budget = JSON.parse(localStorage.getItem('budget'));
+    const summary = document.getElementById('budgetSummary');
+
+    if (budget) {
+      summary.innerHTML = `
+        <div class="budget-row"><span>Food:</span><span>₹${budget.food}</span></div>
+        <div class="budget-row"><span>Travel:</span><span>₹${budget.travel}</span></div>
+        <div class="budget-row"><span>Clothes:</span><span>₹${budget.clothes}</span></div>
+        <div class="budget-row"><span>Rent:</span><span>₹${budget.rent}</span></div>
+        <div class="budget-row"><span>Utilities:</span><span>₹${budget.utilities}</span></div>
+      `;
+    } else {
+      summary.innerHTML = `<p style="text-align:center;">No budget data found. Please fill your budget first.</p>`;
+    }
+  </script>
+
+</body>
+</html>

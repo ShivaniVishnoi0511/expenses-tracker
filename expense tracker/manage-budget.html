@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Budgets</title>
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <header>
+    <h1>Expense Tracker</h1>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="manage-expenses.html">Manage Expenses</a>
+      <a href="manage-budgets.html">Manage Budgets</a>
+      <a href="#">Reports and Analytics</a>
+      <a href="#">Insights</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Your Budgets</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Budget Name</th>
+          <th>Monthly Income</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Select</th>
+          <th>Details</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody id="budget-table-body">
+        <!-- Dynamic Rows Here -->
+      </tbody>
+    </table>
+
+    <div class="center">
+      <button class="add-btn green">Add New Budget</button>
+      <button class="add-btn">Select Budget</button>
+    </div>
+  </main>
+
+  <script src="manage-budgets.js"></script>
+</body>
+</html>

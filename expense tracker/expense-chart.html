@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f0f2f5, #e0eafc);
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #ff6f61;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 50px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    canvas {
+      max-width: 100%;
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Navbar -->
+  <header class="navbar">
+    <h1>Expense Tracker</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="add-expense.html">Add Expense</a>
+      <a href="budget.html">Your Budget</a>
+      <a href="budget-chart.html">Budget Chart</a>
+      <a href="expense-chart.html">Expense Charts</a>
+      <a href="delete-expense.html">Delete Expenses</a>
+      <a href="index.html">Logout</a>
+    </nav>
+  </header>
+
+  <!-- ✅ Chart Container -->
+  <div class="container">
+    <h2>Expenses by Category</h2>
+    <canvas id="categoryChart"></canvas>
+
+    <h2>Expenses Over Time</h2>
+    <canvas id="dateChart"></canvas>
+  </div>
+
+  <!-- ✅ Chart Logic -->
+  <script>
+    const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+    const categoryTotals = {};
+    const dateTotals = {};
+
+    expenses.forEach(exp => {
+      const cat = exp.category;
+      const amt = parseFloat(exp.amount);
+      const date = exp.date;
+
+      // Tally by category
+      categoryTotals[cat] = (categoryTotals[cat] || 0) + amt;
+
+      // Tally by date
+      dateTotals[date] = (dateTotals[date] || 0) + amt;
+    });
+
+    // 🥧 Pie Chart - Categories
+    const ctx1 = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctx1, {
+      type: 'pie',
+      data: {
+        labels: Object.keys(categoryTotals),
+        datasets: [{
+          label: '₹ Spent',
+          data: Object.values(categoryTotals),
+          backgroundColor: [
+            '#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0', '#9966ff', '#f67019', '#00aaff'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Expenses by Category',
+            font: {
+              size: 18
+            }
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    // 📊 Bar Chart - Dates
+    const ctx2 = document.getElementById('dateChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(dateTotals),
+        datasets: [{
+          label: '₹ Spent',
+          data: Object.values(dateTotals),
+          backgroundColor: '#36a2eb'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Expenses Over Time',
+            font: {
+              size: 18
+            }
+          },
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Date'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Amount (₹)'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
